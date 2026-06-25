@@ -1,0 +1,1 @@
+# basic-fitness-trainer-model
