@@ -121,7 +121,7 @@ else:
     tab1, tab2, tab3 = st.tabs(["🏋️ Live AI Trainer", "📅 Workout Planner", "📊 Analytics & Directory"])
 
     # ==========================================
-    # TAB 1: LIVE AI TRACKER
+    # TAB 1: LIVE AI TRACKER (GATED CORE CAPTURE)
     # ==========================================
     with tab1:
         st.subheader("Real-Time Form Analysis & Tracking")
@@ -148,13 +148,10 @@ else:
         feedback_text = st.empty()
         frame_window = st.image([])
 
-        # Isolated Import Block
-        @st.cache_resource
-        def load_model(): 
+        # Safe Internal Import Wrapper Function (On-demand execution)
+        def load_model_safely(): 
             from ultralytics import YOLO
             return YOLO('yolov8n-pose.pt')
-            
-        model = load_model()
 
         run_camera = st.checkbox("Toggle Webcam Engine", value=False)
         
@@ -165,9 +162,14 @@ else:
                 st.session_state.counter = 0
                 rep_stat.metric(label="Rep Count", value=0)
 
+        # The model initialization and video execution are fully isolated here
         if run_camera:
             try:
                 import cv2
+                
+                with st.spinner("Initializing Pose Model Engine..."):
+                    model = load_model_safely()
+                
                 cap = cv2.VideoCapture(0)
                 while cap.isOpened() and run_camera:
                     ret, frame = cap.read()
@@ -215,7 +217,7 @@ else:
                     frame_window.image(image)
                 cap.release()
             except Exception as e:
-                st.error("Linux systems require binary configurations to compute visual matrices. To use camera functions, test script context locally.")
+                st.error("Linux cloud environments lack desktop media architectures. Test the camera features locally.")
 
     # ==========================================
     # TAB 2: WORKOUT PLAN GENERATOR
