@@ -121,11 +121,11 @@ else:
     tab1, tab2, tab3 = st.tabs(["🏋️ Live AI Trainer", "📅 Workout Planner", "📊 Analytics & Directory"])
 
     # ==========================================
-    # TAB 1: LIVE AI TRACKER (PROTECTED DOWNSTREAM IMPORTS)
+    # TAB 1: LIVE AI TRACKER
     # ==========================================
     with tab1:
         st.subheader("Real-Time Form Analysis & Tracking")
-        st.warning("⚠️ Note: Webcam frames track cleanly on your native computer hardware.")
+        st.warning("⚠️ Note: Webcam tracking works smoothly on native local computer configurations.")
         
         exercise_mode = st.selectbox("Choose Exercise Target", ["Bicep Curls", "Squats"])
 
@@ -148,7 +148,7 @@ else:
         feedback_text = st.empty()
         frame_window = st.image([])
 
-        # Safe Internal Import Wrapper Block
+        # Isolated Import Block
         @st.cache_resource
         def load_model(): 
             from ultralytics import YOLO
